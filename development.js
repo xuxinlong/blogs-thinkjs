@@ -12,5 +12,4 @@ const instance = new Application({
   notifier: notifier.notify.bind(notifier),
   env: 'development'
 });
-
 instance.run();
