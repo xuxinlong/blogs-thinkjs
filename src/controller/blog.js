@@ -13,8 +13,12 @@ module.exports = class extends Base {
   }
   async articleAction() {
     var params = this[this.ctx.request.method.toLowerCase()]();
-    var body = await this.getHandle(article, params);
-    this.body = body;
+    var data = await this.getHandle(article, params);
+    this.body = {
+      code: 0,
+      data: data,
+      msg: 'ok'
+    };
     return;
   }
 };
