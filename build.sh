@@ -10,9 +10,9 @@ ssh root@47.104.157.93 << eeooff
 	rm -rf blogs-thinkjs
 	tar -zxf blogs-thinkjs.tar.gz
 
-	nodepid=`ps auxww | grep production.js `
+	#nodepid=`ps auxww | grep production.js `
 
-	echo $nodepid
+	#echo $nodepid
 	
 	# if [ -z "$nodepid" ]; then
 		
