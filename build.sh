@@ -9,19 +9,17 @@ ssh root@47.104.157.93 << eeooff
 	cd /data/app/service
 	rm -rf blogs-thinkjs
 	tar -zxf blogs-thinkjs.tar.gz
-
-	#nodepid=`ps auxww | grep production.js `
-
-	#echo $nodepid
 	
-	# if [ -z "$nodepid" ]; then
-		
-	# else
-	#     echo 'node service is running'
-	#     kill -s USR2 $nodepid 2>/dev/null
-	#     echo 'gracefull restart'
-	# fi
+	# kill 掉已经存在的 development.js 进程
+	str=`ps -ef | grep development.js | grep -v 'grep' | awk '{print$2}'`
+	for pid in `echo "$str" | sed 's/,/\n/g'`
+	do
+		echo "development.js 进程 pid: $pid"
+		kill -9 $pid
+	done
+
 	node blogs-thinkjs/production.js
+	kill $$
 	exit 
 eeooff
 echo Finished: SUCCESS!
