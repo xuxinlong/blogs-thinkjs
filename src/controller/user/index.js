@@ -17,14 +17,14 @@ module.exports = {
 				parent.cookie(user_info.id.toString(), user_info.id.toString() + '-' + Date.now(), config);
 
 				data.data = { 'token': parent.cookie(user_info.id.toString()), 'config': config };
-				console.log('cookie: ', parent.cookie(user_info.id.toString()));
+				// console.log('cookie: ', parent.cookie(user_info.id.toString()));
 			} else {
 				data.msg = '密码不正确';
 			}
 		} else {
 			data.msg = '用户不存在'
 		}
-		console.log(user_info);
+		// console.log(user_info);
 		// let data = await blogs.where({user_id: user_id}).select();
 		return data;
 	},

@@ -1,7 +1,8 @@
 module.exports = class extends think.Controller {
 	// 在具体的 Action 执行之前执行
   __before() {
-  	console.log('__before: ', this.ctx.request, this.body);
+  	// console.log('__before: ', this.ctx.request, this.body);
+  	// console.log('__before: ', this.ctx.request.header);
   	this.body = {
       code: 0,
       data: '',
@@ -9,8 +10,8 @@ module.exports = class extends think.Controller {
   	}
 		// 判断用户是否登录
     var user_id;
-    if (this.ctx.request.header.cookie) {
-      user_id = this.checkCookie(this.getCookie('blog_token'));
+    if (this.ctx.request.header['x-access-token']) {
+      user_id = this.checkCookie(this.ctx.request.header['x-access-token']);
     }
     if (!user_id) {
 	    this.body.code = 12011;

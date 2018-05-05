@@ -30,7 +30,7 @@ module.exports = {
     async delete(params) {
         var param = params[0];
         var blogs = this.think.model('blogs');
-        console.log('delete: ', param);
+        // console.log('delete: ', param);
         let data = await blogs.where({id: param.blog_id}).delete();
         return data;
     },

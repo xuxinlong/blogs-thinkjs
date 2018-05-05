@@ -13,20 +13,10 @@ ssh root@47.104.157.93 << eeooff
 	
 	echo "kill 掉已经存在的 production.js 进程"
 	ps -ef | grep production.js | grep -v 'grep' | awk '{print \$2}' | xargs kill -9
-	
-	# kill -9 `ps -ef | grep production.js | grep -v 'grep' | awk '{print \$2}'`
-	# str=`ps -ef | grep production.js | grep -v 'grep' | awk '{print \$2}'`
-	# echo "进程：$str"
-	# for pid in `echo "$str" | sed 's/,/\n/g'`
-	# do
-	# 	echo "production.js 进程 pid: $pid"
-	# 	kill -9 $pid
-	# done
 
 	echo "启动服务，后台运行"
 
 	node blogs-thinkjs/production.js > service.log 2>&1 &
-	# kill $$
 	exit 
 eeooff
 echo Finished: SUCCESS!
