@@ -2,23 +2,17 @@ const Base = require('./base.js');
 const article = require('./article/index.js');
 
 module.exports = class extends Base {
-  async getHandle(_module) {
-    var route = this.ctx.request.url.split('/'),
-      handle = _module;
-    for (var i = 3, len = route.length; i < len; i++) {
-      handle = handle[route[i]];
-    }
-    var data = await handle(Array.prototype.slice.call(arguments, 1));
-    return data;
-  }
   async articleAction() {
+    // console.log(this.ctx.request, this.body);
+    var user_id;
+    if (this.ctx.request.header.cookie) {
+      user_id = this.checkCookie(this.getCookie('blog_token'));
+    }
+
     var params = this[this.ctx.request.method.toLowerCase()]();
+    params.user_id = user_id;
     var data = await this.getHandle(article, params);
-    this.body = {
-      code: 0,
-      data: data,
-      msg: 'ok'
-    };
+    this.body.data = data
     return;
   }
 };

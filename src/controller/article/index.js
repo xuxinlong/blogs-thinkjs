@@ -1,9 +1,16 @@
 module.exports = {
     async list(params) {
-    	var user_id = params[0];
-    	user_id = 1;
+    	var user_id = params[0].user_id;
         var blogs = this.think.model('blogs');
-        let data = await blogs.where({user_id: user_id}).select();
+        var options = {};
+        if (user_id) {
+            options.user_id = user_id;
+        }
+        let data = await blogs.where(options).select();
+        // console.log('list: ', data);
+        for (var i = 0, item; item = data[i++];) {
+            item.isAuther = (item.user_id == user_id);
+        }
         return data;
     },
     async add(params) {
@@ -20,11 +27,19 @@ module.exports = {
         let data = await blogs.where({id: param.blog_id}).update({title: param.title, text: param.text});
         return data;
     },
+    async delete(params) {
+        var param = params[0];
+        var blogs = this.think.model('blogs');
+        console.log('delete: ', param);
+        let data = await blogs.where({id: param.blog_id}).delete();
+        return data;
+    },
     async detail(params) {
         var param = params[0];
         var blogs = this.think.model('blogs');
 
         let data = await blogs.where({id: param.id}).find();
+        data.isAuther = (data.user_id == param.user_id);
         return data;
     },
 };
