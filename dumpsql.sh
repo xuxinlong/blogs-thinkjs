@@ -5,6 +5,11 @@ scp blogs.sql root@47.104.157.93:/data/app/service/blogs.sql
 echo ' 服务器处理 '
 ssh root@47.104.157.93 << eeooff
 	cd /data/app/service
+
+	# mysql -uroot -p
+	# use blogs
+	# source /data/app/service/blogs.sql
+
 	exit 
 eeooff
 echo Finished: SUCCESS!
