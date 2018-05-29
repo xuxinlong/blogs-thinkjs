@@ -1,10 +1,15 @@
 module.exports = {
 	async list(params) {
-		var user_id = params[0].user_id;
+		var param = params[0];
+		var user_id = param.user_id;
+		var type = param.type;
 		var blogs = this.think.model('blogs');
 		var options = {};
 		if (user_id) {
 			options.user_id = user_id;
+		}
+		if (type) {
+			options.type = type;
 		}
 		let data = await blogs.where(options).select();
 		// console.log('list: ', data);

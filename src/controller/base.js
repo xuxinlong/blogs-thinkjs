@@ -45,10 +45,10 @@ module.exports = class extends think.Controller {
 
 	// 分配对应的处理函数
 	async getHandle(_module) {
-		var route = this.ctx.request.url.split('/'),
+		var route = this.ctx.request.url.split('?')[0].split('/'),
 			handle = _module;
-		 // console.log('route: ', route);
-		 // console.log('handle: ', handle);
+		// console.log('route: ', route);
+		// console.log('handle: ', handle);
 		for (var i = 3, len = route.length; i < len; i++) {
 			handle = handle[route[i]];
 		}
