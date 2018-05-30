@@ -28,4 +28,14 @@ module.exports = {
 		// let data = await blogs.where({user_id: user_id}).select();
 		return data;
 	},
+	async info(params) {
+		var param = params[0],
+			user = this.think.model('user');
+		var user_info = await user.where({'id': param.user_id}).find();
+		return {
+			'id': user_info.id,
+			'phone': user_info.phone,
+			'name': user_info.name
+		};
+	}
 };
