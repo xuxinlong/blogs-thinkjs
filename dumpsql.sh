@@ -1,4 +1,5 @@
 #!/bin/sh
+# 备份出具库数据
 mysqldump -u root -p blogs > blogs.sql
 scp blogs.sql root@47.104.157.93:/data/app/service/blogs.sql
 
@@ -8,6 +9,7 @@ ssh root@47.104.157.93 << eeooff
 
 	# mysql -uroot -p
 	# use blogs
+	# 同步备份的数据
 	# source /data/app/service/blogs.sql
 
 	exit 
