@@ -1,3 +1,5 @@
+const notCheckLogin = ['/blog/article/list'];
+
 module.exports = class extends think.Controller {
 	// 在具体的 Action 执行之前执行
 	__before() {
@@ -8,14 +10,17 @@ module.exports = class extends think.Controller {
 			data: '',
 			msg: 'ok'
 		}
-		// 判断用户是否登录
-		var user_id;
-		if (this.ctx.request.header['x-access-token']) {
-			user_id = this.checkCookie(this.ctx.request.header['x-access-token']);
-		}
-		if (!user_id) {
-			this.body.code = 12011;
-			this.body.msg = 'Not logged on';
+		console.log('this.ctx.request.url： ', this.ctx.request.url);
+		if (notCheckLogin.indexOf(this.ctx.request.url) < 0) {
+			// 判断用户是否登录
+			var user_id;
+			if (this.ctx.request.header['x-access-token']) {
+				user_id = this.checkCookie(this.ctx.request.header['x-access-token']);
+			}
+			if (!user_id) {
+				this.body.code = 12011;
+				this.body.msg = 'Not logged on';
+			}
 		}
 	}
 
