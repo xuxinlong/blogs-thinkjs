@@ -10,8 +10,7 @@ module.exports = class extends think.Controller {
 			data: '',
 			msg: 'ok'
 		}
-		console.log('this.ctx.request.url： ', this.ctx.request.url);
-		if (notCheckLogin.indexOf(this.ctx.request.url) < 0) {
+		if (notCheckLogin.indexOf(this.ctx.request.url.split('?')[0]) < 0) {
 			// 判断用户是否登录
 			var user_id;
 			if (this.ctx.request.header['x-access-token']) {

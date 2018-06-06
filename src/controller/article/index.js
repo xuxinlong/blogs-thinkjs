@@ -5,11 +5,13 @@ module.exports = {
 		var type = param.type;
 		var blogs = this.think.model('blogs');
 		var options = {};
-		if (user_id) {
-			options.user_id = user_id;
-		}
 		if (type) {
 			options.type = type;
+		}
+		if (user_id) {
+			options.user_id = user_id;
+		} else {
+			options.type = 1;
 		}
 		let data = await blogs.where(options).select();
 		// console.log('list: ', data);
