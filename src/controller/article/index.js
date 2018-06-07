@@ -20,6 +20,12 @@ module.exports = {
 		}
 		return data;
 	},
+	async list_public(params) {
+		var blogs = this.think.model('blogs');
+		var options = { type: 1};
+		let data = await blogs.where(options).select();
+		return data;
+	},
 	async add(params) {
 		var user_id = params[0];
 		var blogs = this.think.model('blogs');
@@ -49,6 +55,22 @@ module.exports = {
 		let data = await blogs.where({ id: param.id }).find();
 		let user_info = await user.where({ id: data.user_id }).find();
 		data.isAuther = (data.user_id == param.user_id);
+		return {
+			'detail': data,
+			'user_info': {
+				'id': user_info.id,
+				'phone': user_info.phone,
+				'name': user_info.name
+			}
+		};
+	},
+	async detail_public(params) {
+		var param = params[0],
+			blogs = this.think.model('blogs'),
+			user = this.think.model('user');
+
+		let data = await blogs.where({ id: param.id }).find();
+		let user_info = await user.where({ id: data.user_id }).find();
 		return {
 			'detail': data,
 			'user_info': {
