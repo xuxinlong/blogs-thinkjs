@@ -11,6 +11,7 @@ module.exports = class extends think.Controller {
 			msg: 'ok'
 		}
 		if (!/_public/.test(this.ctx.request.url.split('?')[0])) {
+			console.log('global.cookie: ', global.cookie);
 			// 判断用户是否登录
 			var user_id;
 			if (this.ctx.request.header['x-access-token']) {
@@ -41,9 +42,15 @@ module.exports = class extends think.Controller {
 	// 校验cookie
 	checkCookie(token) {
 		var user_id;
-		if (token && token === this.cookie(token.split('-')[0])) {
+		if (!global.cookie) {
+			return undefined;
+		}
+		if (global.cookie && token === global.cookie[token.split('-')[0]]) {
 			user_id = Number(token.split('-')[0]);
 		}
+		// if (token && token === this.cookie(token.split('-')[0])) {
+		// 	user_id = Number(token.split('-')[0]);
+		// }
 		return user_id;
 	}
 

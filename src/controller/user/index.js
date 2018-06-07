@@ -14,9 +14,14 @@ module.exports = {
 				data.msg = '密码正确';
 				data.code = 0;
 				data.data = user_info;
-				parent.cookie(user_info.id.toString(), user_info.id.toString() + '-' + Date.now(), config);
+				// parent.cookie(user_info.id.toString(), user_info.id.toString() + '-' + Date.now(), config);
+				// data.data = { 'token': parent.cookie(user_info.id.toString()), 'config': config };
+				if (!global.cookie) {
+					global.cookie = {};
+				}
+				global.cookie[user_info.id.toString()] = user_info.id.toString() + '-' + Date.now();
 
-				data.data = { 'token': parent.cookie(user_info.id.toString()), 'config': config };
+				data.data = { 'token': global.cookie[user_info.id.toString()] };
 				// console.log('cookie: ', parent.cookie(user_info.id.toString()));
 			} else {
 				data.msg = '密码不正确';
