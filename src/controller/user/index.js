@@ -35,7 +35,8 @@ module.exports = {
 		return {
 			'id': user_info.id,
 			'phone': user_info.phone,
-			'name': user_info.name
+			'name': user_info.name,
+			'github_url': user_info.github_url
 		};
 	}
 };
