@@ -33,11 +33,19 @@ module.exports = {
 		let data = await blogs.add(params[0]);
 		return data;
 	},
-	async update(params) {
-		var param = params[0];
-		var blogs = this.think.model('blogs');
+	async update(params, parent) {
+		var param = params[0],
+			data = {},
+			blogs = this.think.model('blogs'),
+			art = await blogs.where({ id: param.blog_id }).find();
 
-		let data = await blogs.where({id: param.blog_id}).update({title: param.title, text: param.text});
+		if (param.user_id.toString() === art.user_id.toString()) {
+			data = await blogs.where({id: param.blog_id}).update({title: param.title, text: param.text});
+		} else {
+			parent.body.code = 10500;
+			parent.body.msg = '您没有权限编辑这边文章';
+			data = {};
+		}
 		return data;
 	},
 	async delete(params) {
