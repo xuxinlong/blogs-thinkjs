@@ -10,8 +10,9 @@ module.exports = class extends think.Controller {
 			data: '',
 			msg: 'ok'
 		}
+		// console.log('this.ctx.request: ', this.ctx.request.header['x-system']);
 		if (!/_public/.test(this.ctx.request.url.split('?')[0])) {
-			console.log('global.cookie: ', global.cookie);
+			// console.log('global.cookie: ', global.cookie);
 			// 判断用户是否登录
 			var user_id;
 			if (this.ctx.request.header['x-access-token']) {
@@ -41,11 +42,16 @@ module.exports = class extends think.Controller {
 
 	// 校验cookie
 	checkCookie(token) {
-		var user_id;
+		var user_id,
+			key = token.split('-')[0],
+			x_system = this.ctx.request.header['x-system'];
 		if (!global.cookie) {
 			return undefined;
 		}
-		if (global.cookie && token === global.cookie[token.split('-')[0]]) {
+		if (x_system) {
+			key += '-' + x_system;
+		}
+		if (global.cookie && token === global.cookie[key]) {
 			user_id = Number(token.split('-')[0]);
 		}
 		// if (token && token === this.cookie(token.split('-')[0])) {

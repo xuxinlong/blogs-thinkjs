@@ -19,9 +19,15 @@ module.exports = {
 				if (!global.cookie) {
 					global.cookie = {};
 				}
-				global.cookie[user_info.id.toString()] = user_info.id.toString() + '-' + Date.now();
+				var x_system = parent.ctx.request.header['x-system'],
+					key = user_info.id.toString();
+				// console.log('x-system: ', parent.ctx.request.header, x_system);
+				if (x_system) {
+					key += '-' + x_system;
+				}
+				global.cookie[key] = key + '-' + Date.now();
 
-				data.data = { 'token': global.cookie[user_info.id.toString()] };
+				data.data = { 'token': global.cookie[key] };
 				// console.log('cookie: ', parent.cookie(user_info.id.toString()));
 			} else {
 				data.msg = '密码不正确';
