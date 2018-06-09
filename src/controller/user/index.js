@@ -1,5 +1,5 @@
 module.exports = {
-	async login(params, parent) {
+	async login_public(params, parent) {
 		var data = { 'code': 10500, 'data': '', 'msg': '系统错误' },
 			config = {
 				timeout: 30 * 24 * 3600
