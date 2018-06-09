@@ -39,8 +39,12 @@ module.exports = {
 			blogs = this.think.model('blogs'),
 			art = await blogs.where({ id: param.blog_id }).find();
 
+
 		if (param.user_id.toString() === art.user_id.toString()) {
-			data = await blogs.where({id: param.blog_id}).update({title: param.title, text: param.text});
+			var len = await blogs.where({id: param.blog_id}).update({title: param.title, text: param.text});
+			if (len === 1) {
+				data = Number(param.blog_id)
+			}
 		} else {
 			parent.body.code = 10500;
 			parent.body.msg = '您没有权限编辑这边文章';
