@@ -47,16 +47,26 @@ module.exports = {
 			}
 		} else {
 			parent.body.code = 10500;
-			parent.body.msg = '您没有权限编辑这边文章';
+			parent.body.msg = '您没有权限编辑这篇文章';
 			data = {};
 		}
 		return data;
 	},
 	async delete(params) {
-		var param = params[0];
-		var blogs = this.think.model('blogs');
-		// console.log('delete: ', param);
-		let data = await blogs.where({id: param.blog_id}).delete();
+		var param = params[0],
+			blogs = this.think.model('blogs'),
+			art = await blogs.where({ id: param.blog_id }).find();
+
+		if (param.user_id.toString() === art.user_id.toString()) {
+			let data = await blogs.where({id: param.blog_id}).delete();
+			if (len === 1) {
+				data = Number(param.blog_id)
+			}
+		} else {
+			parent.body.code = 10500;
+			parent.body.msg = '您没有权限删除这篇文章';
+			data = {};
+		}
 		return data;
 	},
 	async detail(params) {
