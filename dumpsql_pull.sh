@@ -1,5 +1,5 @@
 #!/bin/sh
-# 备份出具库数据
+# 备份出 线上 数据库数据
 
 scp root@47.104.157.93:/data/app/service/blogs.sql blogs.sql 
 
