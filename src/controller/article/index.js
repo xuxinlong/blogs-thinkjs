@@ -31,6 +31,7 @@ module.exports = {
             user = this.think.model('user'),
             options = { type: 1};
 
+        let users = await user.select();
         let usersMap = {};
         users.forEach(function (item) {
             usersMap[item.id] = item;
